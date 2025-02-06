@@ -1,0 +1,131 @@
+.experience-preview {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 8px;
+    max-height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable scrolling when content exceeds screen */
+}
+
+
+/* Removed border between individual experiences */
+.experience-item {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+}
+
+/* Adjusted layout */
+.left-section {
+    float: left;
+    width: 48%;
+}
+
+.right-section {
+    float: right;
+    width: 48%;
+    text-align: right;
+}
+
+/* Reduced font sizes for compact display */
+.profile-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.company-name {
+    font-size: 12px;
+    color: #666;
+}
+
+.duration {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.location {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Bullet points */
+.bullet-points {
+    clear: both;
+    margin-top: 6px;
+    padding-left: 15px;
+}
+
+.bullet-points li {
+    font-size: 12px;
+    margin-bottom: 3px;
+    color: #444;
+}
+
+/* Resume container that enables scrolling */
+.resume-container {
+    max-height: 100vh; /* Full screen height */
+    overflow-y: auto; /* Enable scrolling when needed */
+    padding: 10px;
+}
+
+.resume-container {
+    position: relative; /* Keeps it in place */
+    max-height: 90vh; /* Adjust based on your layout */
+    overflow-y: auto; /* Enables scrolling when content exceeds height */
+    padding: 10px;
+    border: 1px solid #ccc; /* Keeps a subtle boundary */
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Keep section dividers, but remove borders within experience */
+
+
+/* Adjust font sizes for a compact look */
+.experience-preview {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 8px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #ff6666;
+}
+
+.experience-item {
+    margin-bottom: 6px;
+    padding-bottom: 0px;
+}
+
+/* Remove lines between individual experiences */
+.experience-item:not(:last-child) {
+    border-bottom: none;
+}
+
+/* Page break styling */
+.page-break {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    color: #888;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.page-break::before,
+.page-break::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+    margin: 0 10px;
+}
+
+

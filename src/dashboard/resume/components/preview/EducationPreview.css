@@ -1,0 +1,58 @@
+.education-preview {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 8px;
+}
+
+/* Ensure section title is closer to the divider */
+.section-title {
+    font-size: 20px; /* Increase title size */
+    font-weight: bold;
+    margin-bottom: 12px; /* Adjusted spacing */
+    margin-top: 0; /* Remove unnecessary gap */
+    color: #ff6666;
+}
+
+/* More spacing between education entries */
+.education-item {
+    margin-bottom: 30px; /* Increased spacing */
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Left section - Institute name & Degree */
+.left-section {
+    width: 48%;
+    text-align: left;
+}
+
+.institute-name {
+    font-size: 18px; /* Increase institute name size */
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.degree {
+    font-size: 14px; /* Slightly bigger */
+    color: #666;
+}
+
+/* Right section - Duration & Grade */
+.right-section {
+    width: 48%;
+    text-align: right;
+}
+
+.duration {
+    font-size: 16px; /* Increase duration font */
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.grade {
+    font-size: 20px; /* Make grade info larger */
+    color: #666;
+}

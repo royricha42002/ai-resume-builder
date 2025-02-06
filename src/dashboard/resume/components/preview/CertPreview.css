@@ -1,0 +1,52 @@
+.cert-preview {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 8px;
+}
+
+/* Section title styling */
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    margin-top: 0;
+    color: #ff6666;
+}
+
+/* Styling for certification items */
+.cert-item {
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Left section - Certificate name */
+.left-section {
+    width: 48%;
+    text-align: left;
+}
+
+.cert-name {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0073e6;
+}
+
+.cert-name:hover {
+    text-decoration: underline;
+}
+
+/* Right section - Issuer name */
+.right-section {
+    width: 48%;
+    text-align: right;
+}
+
+.issuer-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+}
