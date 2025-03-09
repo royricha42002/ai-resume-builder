@@ -25,6 +25,7 @@ function ResumePreview() {
             {/* projects  */}
             {/* <ProjectPreview resumeInfo={resumeInfo}/> */}
             {/* skills  */}
+            <hr/>
             <SkillPreview resumeInfo={resumeInfo}/>
         </div>
     );

@@ -1,112 +1,105 @@
 .experience-preview {
-    font-family: Arial, sans-serif;
-    color: #333;
+    font-family: 'Georgia', serif; /* Updated font family */
+    color: #333; /* Default text color */
     padding: 8px;
     max-height: 100vh; /* Full viewport height */
     overflow-y: auto; /* Enable scrolling when content exceeds screen */
 }
 
-
-/* Removed border between individual experiences */
-.experience-item {
-    margin-bottom: 10px;
-    padding-bottom: 8px;
+/* Section Title */
+.section-title {
+    font-size: 40px; /* Larger font size for section title */
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Dark blue for a professional look */
+    font-family: 'Georgia', serif; /* Consistent font */
 }
 
-/* Adjusted layout */
+/* Experience Item */
+.experience-item {
+    margin-bottom: 10px; /* Increased margin for better spacing */
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+    border-bottom: 1px solid #eee; /* Light border between items */
+}
+
+/* Left Section */
 .left-section {
     float: left;
     width: 48%;
 }
 
+/* Right Section */
 .right-section {
     float: right;
     width: 48%;
     text-align: right;
 }
 
-/* Reduced font sizes for compact display */
+/* Profile Name */
 .profile-name {
-    font-size: 14px;
+    font-size: 22px; /* Larger font size for profile name */
     font-weight: bold;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    color: #34495e; /* Darker color for emphasis */
+    font-family: 'Georgia', serif; /* Consistent font */
 }
 
+/* Company Name */
 .company-name {
-    font-size: 12px;
-    color: #666;
+    font-size: 16px; /* Slightly larger font size */
+    color: #555; /* Darker gray for better readability */
+    font-family: 'Georgia', serif; /* Consistent font */
+    margin-bottom: 6px; /* Added margin for spacing */
 }
 
+/* Duration */
 .duration {
-    font-size: 14px;
+    font-size: 16px; /* Slightly larger font size */
     font-weight: bold;
-    margin-bottom: 4px;
-    color: #444;
+    margin-bottom: 6px;
+    color: #2c3e50; /* Dark blue for emphasis */
+    font-family: 'Georgia', serif; /* Consistent font */
 }
 
+/* Location */
 .location {
-    font-size: 12px;
-    color: #666;
+    font-size: 16px; /* Slightly larger font size */
+    color: #555; /* Darker gray for better readability */
+    font-family: 'Georgia', serif; /* Consistent font */
 }
 
-/* Bullet points */
+/* Bullet Points */
 .bullet-points {
     clear: both;
-    margin-top: 6px;
-    padding-left: 15px;
+    margin-top: 14px; /* Increased margin for spacing */
+    padding-left: 20px; /* Increased padding for bullet points */
+    padding-top: 5px;
+    
+    font-family: 'Georgia', serif; /* Readable font for bullet points */
+    color: #444; /* Dark gray for readability */
+    line-height: 1.25; /* Improved line height for readability */
+    font-size: 14px; /* Reduced font size for summary */
 }
 
 .bullet-points li {
-    font-size: 12px;
-    margin-bottom: 3px;
-    color: #444;
+    font-size: 16px; /* Reduced font size for bullet points */
+    margin-bottom: 6px; /* Increased margin for spacing */
+    color: #444; /* Dark gray for readability */
+    
 }
 
-/* Resume container that enables scrolling */
+/* Resume Container */
 .resume-container {
     max-height: 100vh; /* Full screen height */
     overflow-y: auto; /* Enable scrolling when needed */
     padding: 10px;
 }
 
-.resume-container {
-    position: relative; /* Keeps it in place */
-    max-height: 90vh; /* Adjust based on your layout */
-    overflow-y: auto; /* Enables scrolling when content exceeds height */
-    padding: 10px;
-    border: 1px solid #ccc; /* Keeps a subtle boundary */
-    border-radius: 8px;
-    background-color: #fff;
-}
-
-/* Keep section dividers, but remove borders within experience */
-
-
-/* Adjust font sizes for a compact look */
-.experience-preview {
-    font-family: Arial, sans-serif;
-    color: #333;
-    padding: 8px;
-}
-
-.section-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #ff6666;
-}
-
-.experience-item {
-    margin-bottom: 6px;
-    padding-bottom: 0px;
-}
-
-/* Remove lines between individual experiences */
-.experience-item:not(:last-child) {
-    border-bottom: none;
-}
-
-/* Page break styling */
+/* Page Break Styling */
 .page-break {
     display: flex;
     align-items: center;
@@ -127,5 +120,3 @@
     background: #ccc;
     margin: 0 10px;
 }
-
-

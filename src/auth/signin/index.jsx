@@ -1,12 +1,15 @@
-import { SignIn } from '@clerk/clerk-react'
-import React from 'react'
+import { SignIn } from '@clerk/clerk-react';
+import React from 'react';
+import './signin.css';
 
 function Signin() {
   return (
-    <div className='flex justify-center items-center h-screen'>
-        <SignIn/>
+    <div className="signin-page">
+      <div className="signin-container">
+        <SignIn />
+      </div>
     </div>
-  )
+  );
 }
 
-export default Signin
+export default Signin;

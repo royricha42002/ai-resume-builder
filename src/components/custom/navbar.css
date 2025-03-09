@@ -1,31 +1,78 @@
-/* Navbar.css */
+/* Navbar container */
 .navbar {
-    margin: 1rem 2.5rem;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #f87171; /* Tailwind's bg-red-500 */
-    color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar img {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .navbar .button {
-    background-color: #ffffff;
-    color: #f87171; /* Same as bg-red-500 */
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .navbar .button:hover {
-    background-color: #f3f4f6;
-  }
-  
+  background-color: #121212; /* Dark background */
+  color: #E0E0E0; /* Light text */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo */
+.navbar img {
+  height: 50px;
+  width: auto;
+}
+
+/* Navigation links */
+.navbar a {
+  text-decoration: none;
+  color: #E0E0E0;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #BB86FC; /* Soft purple */
+}
+
+/* Buttons */
+.navbar button {
+  background-color: #BB86FC !important; /* Primary color */
+  color: #121212 !important; /* Dark text */
+  border-radius: 8px;
+  padding: 8px 16px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.navbar button:hover {
+  background-color: #9A67EA !important; /* Slightly darker purple */
+}
+
+/* Outline button (Dashboard) */
+.navbar .btn-outline {
+  background: transparent;
+  color: #E0E0E0 !important;
+  border: 2px solid #BB86FC !important;
+}
+
+.navbar .btn-outline:hover {
+  background: #BB86FC !important;
+  color: #121212 !important;
+}
+
+/* UserButton container */
+.navbar .flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Ensure UserButton is properly centered */
+.cl-userButton {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Fix avatar inside UserButton */
+.cl-userButton .cl-avatarBox {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+

@@ -33,9 +33,9 @@ function RichTextEditor({onRichTextEditorChange, index}) {
   return (
     <div>
         <div>
-        <label className='text-xs'>Summary</label>
+        {/* <label className='text-xs'>Summary</label> */}
         <button  size="sm" onClick={GenerateSummaryFromAI}> Generate from AI 
-         </button>
+         </button> 
         </div>
         <EditorProvider>
         <Editor value={value} onChange={(e)=>{

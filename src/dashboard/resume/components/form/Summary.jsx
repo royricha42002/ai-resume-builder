@@ -3,6 +3,7 @@ import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 import { useParams } from "react-router-dom";
 import GlobalApi from "./../../../../../service/GlobalApi";
 import { AIChatSession } from "./../../../../../service/AIModal";
+import "./Summary.css";
 
 function Summary({ enabledNext }) {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
@@ -63,45 +64,44 @@ function Summary({ enabledNext }) {
   };
 
   return (
-    <div className="p-4">
+    <div className="summary-container">
       <form onSubmit={onSave}>
-        <div className="text-xl font-bold mb-2">Summary</div>
-        <div>
-          <div className="mb-2 flex justify-between items-center">
-            <label className="block font-semibold">Add Summary</label>
-            <button 
-              type="button" 
-              onClick={GenerateSummaryFromAI} 
-              disabled={loading} 
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:bg-gray-400">
-              {loading ? "Generating..." : "Generate from AI"}
-            </button>
+        <div className="form-header">About Me</div>
+        <div className="form-group">
+          <button 
+            type="button" 
+            onClick={GenerateSummaryFromAI} 
+            disabled={loading} 
+            className="generate-btn">
+            {loading ? "Generating..." : "Generate from AI"}
+          </button>
+          <div className="summary-box">
+            <textarea
+              onChange={(e) => setSummary(e.target.value)}
+              required
+              className="summary-textarea"
+              placeholder="Write your summary here..."
+              value={loading ? "Generating summary..." : summary}
+              disabled={loading}
+            />
           </div>
-          <textarea
-            onChange={(e) => setSummary(e.target.value)}
-            required
-            className="w-full h-40 border border-gray-300 p-2 rounded-lg"
-            placeholder="Write your summary here..."
-            value={loading ? "Generating summary..." : summary}
-            disabled={loading}
-          />
         </div>
         <button 
           disabled={loading} 
           type="submit" 
-          className="bg-green-500 text-white px-4 py-2 mt-3 rounded-md hover:bg-green-600 disabled:bg-gray-400">
+          className="save-btn">
           {loading ? "Saving..." : "Save"}
         </button>
       </form>
       {aiGeneratedSummaryList.length > 0 && (
-        <div className='my-5'>
-          <h2 className='font-bold text-lg'>Suggestions</h2>
+        <div className='suggestions-container'>
+          <h2 className='suggestions-title'>Suggestions</h2>
           {aiGeneratedSummaryList.map((item, index) => (
             <div
               key={index}
               onClick={() => setSummary(item?.summary)}
-              className='p-5 shadow-lg my-4 rounded-lg cursor-pointer bg-gray-100 hover:bg-gray-200 transition'>
-              <h2 className='font-bold my-1 text-blue-600'>Level: {item?.experience_level}</h2>
+              className='suggestion-card'>
+              <h2 className='suggestion-level'>Level: {item?.experience_level}</h2>
               <p>{item?.summary}</p>
             </div>
           ))}

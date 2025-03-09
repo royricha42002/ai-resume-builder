@@ -1,0 +1,45 @@
+.skills-preview {
+    font-family: 'Georgia', serif; /* Consistent font family */
+    color: #333; /* Default text color */
+    padding: 8px;
+    max-height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable scrolling when content exceeds screen */
+}
+
+/* Section Title */
+.section-title {
+    font-size: 24px; /* Larger font size for section title */
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2c3e50; /* Dark blue for a professional look */
+    font-family: 'Georgia', serif; /* Consistent font */
+    text-align: center; /* Center the title */
+}
+
+/* Section Divider */
+.section-divider {
+    border: 1px solid #444; /* Light border for the divider */
+    margin-bottom: 15px; /* Spacing below the divider */
+}
+
+/* Skills List */
+.skills-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow skills to wrap to the next line */
+    gap: 8px; /* Spacing between skill names */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Skill Name */
+.skill-name {
+    font-size: 16px; /* Slightly larger font size */
+    color: #555; /* Darker gray for better readability */
+    font-family: 'Georgia', serif; /* Consistent font */
+    text-align: left; /* Left-align skill names */
+    margin: 0; /* Remove default margin */
+    padding: 4px 8px ; /* Add some padding for better spacing */
+
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+}

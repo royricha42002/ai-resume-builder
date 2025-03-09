@@ -15,6 +15,23 @@ export interface EducationEducation extends Struct.ComponentSchema {
   };
 }
 
+export interface ExperienceExperience extends Struct.ComponentSchema {
+  collectionName: 'components_experience_experiences';
+  info: {
+    displayName: 'Experience';
+    icon: 'eye';
+  };
+  attributes: {
+    city: Schema.Attribute.String;
+    companyName: Schema.Attribute.String;
+    endDate: Schema.Attribute.String;
+    startDate: Schema.Attribute.String;
+    state: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+    workSummary: Schema.Attribute.Text;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -92,6 +109,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'education.education': EducationEducation;
+      'experience.experience': ExperienceExperience;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

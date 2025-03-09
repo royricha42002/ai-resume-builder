@@ -23,7 +23,8 @@ function ExperiencePreview({ resumeInfo }) {
               {exp.city}, {exp.state}
             </div>
           </div>
-          <div className="bullet-points" dangerouslySetInnerHTML={{__html:exp?.workSummary}} />
+          {/* Render workSummary */}
+          <div className="bullet-points" dangerouslySetInnerHTML={{ __html: exp.workSummary }} />
         </div>
       ))}
     </div>

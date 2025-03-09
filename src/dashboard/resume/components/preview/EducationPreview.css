@@ -1,58 +1,71 @@
 .education-preview {
-    font-family: Arial, sans-serif;
-    color: #333;
+    font-family: 'Georgia', serif; /* Consistent font family */
+    color: #333; /* Default text color */
     padding: 8px;
+    max-height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable scrolling when content exceeds screen */
 }
 
-/* Ensure section title is closer to the divider */
+/* Section Title */
 .section-title {
-    font-size: 20px; /* Increase title size */
+    font-size: 30px; /* Larger font size for section title */
     font-weight: bold;
-    margin-bottom: 12px; /* Adjusted spacing */
-    margin-top: 0; /* Remove unnecessary gap */
-    color: #ff6666;
+    margin-bottom: 15px;
+    color: #2c3e50; /* Dark blue for a professional look */
+    font-family: 'Georgia', serif; /* Consistent font */
 }
 
-/* More spacing between education entries */
+/* Education Item */
 .education-item {
-    margin-bottom: 30px; /* Increased spacing */
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    margin-bottom: 30px; /* Increased margin for better spacing */
+    padding-bottom: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid #eee; /* Light border between items */
 }
 
-/* Left section - Institute name & Degree */
+/* Left Section */
 .left-section {
-    width: 48%;
-    text-align: left;
+    float: left;
+    width: 60%; /* Adjusted width for better alignment */
 }
 
-.institute-name {
-    font-size: 18px; /* Increase institute name size */
-    font-weight: bold;
-    margin-bottom: 6px;
-}
-
-.degree {
-    font-size: 14px; /* Slightly bigger */
-    color: #666;
-}
-
-/* Right section - Duration & Grade */
+/* Right Section */
 .right-section {
-    width: 48%;
+    float: right;
+    width: 40%; /* Adjusted width for better alignment */
     text-align: right;
 }
 
-.duration {
-    font-size: 16px; /* Increase duration font */
+/* University Name */
+.university-name {
+    font-size: 22px; /* Larger font size for university name */
     font-weight: bold;
     margin-bottom: 6px;
-    color: #444;
+    color: #34495e; /* Darker color for emphasis */
+    font-family: 'Georgia', serif; /* Consistent font */
 }
 
+/* Degree and Major */
+.degree-major {
+    font-size: 16px; /* Slightly larger font size */
+    color: #555; /* Darker gray for better readability */
+    font-family: 'Georgia', serif; /* Consistent font */
+    margin-bottom: 6px; /* Added margin for spacing */
+}
+
+/* Duration */
+.duration {
+    font-size: 16px; /* Slightly larger font size */
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #2c3e50; /* Dark blue for emphasis */
+    font-family: 'Georgia', serif; /* Consistent font */
+}
+
+/* Grade */
 .grade {
-    font-size: 20px; /* Make grade info larger */
-    color: #666;
+    font-size: 18px; /* Slightly larger font size */
+    color: #555; /* Darker gray for better readability */
+    font-family: 'Georgia', serif; /* Consistent font */
 }

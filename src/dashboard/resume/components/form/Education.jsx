@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 import { useParams } from "react-router-dom";
 import GlobalApi from "./../../../../../service/GlobalApi";
+import "./Education.css";
 
 function Education() {
     const [loading, setLoading] = useState(false);
@@ -13,23 +14,23 @@ function Education() {
             degree: "",
             major: "",
             startDate: "",
-            endDate: ""
+            endDate: "",
         },
     ]);
 
-    const handleChange=(event,index)=>{
-        const newEntries=educationalList.slice();
-        const {name,value}=event.target;
-        newEntries[index][name]=value;
+    const handleChange = (event, index) => {
+        const newEntries = [...educationalList];
+        const { name, value } = event.target;
+        newEntries[index][name] = value;
         setEducationalList(newEntries);
-      }
+    };
 
-      useEffect(()=>{
+    useEffect(() => {
         setResumeInfo({
             ...resumeInfo,
-            education:educationalList
-        })
-      },[educationalList])
+            education: educationalList,
+        });
+    }, [educationalList]);
 
     const AddNewEducation = () => {
         setEducationalList([
@@ -39,108 +40,87 @@ function Education() {
                 degree: "",
                 major: "",
                 startDate: "",
-                endDate: ""
+                endDate: "",
             },
         ]);
     };
 
     const RemoveEducation = () => {
-        setEducationalList((educationalList) => educationalList.slice(0, -1));
+        if (educationalList.length > 1) {
+            setEducationalList(educationalList.slice(0, -1));
+        }
     };
-
-    
 
     const onSave = () => {
         setLoading(true);
         const data = {
             data: {
-                education: educationalList.map(({ id, ...rest }) => rest)
+                education: educationalList.map(({ id, ...rest }) => rest),
             },
         };
 
-        GlobalApi.UpdateResumeDetail(params.resumeId,data).then(resp=>{
-            console.log(resp);
-            setLoading(false)
-            alert('Details updated !')
-          },(error)=>{
-            setLoading(false);
-            alert('Server Error, Please try again!')
-          })
-
-
-        
-        console.log("Saving data:", data); // Placeholder
-
-        
-
-
+        GlobalApi.UpdateResumeDetail(params.resumeId, data)
+            .then((resp) => {
+                console.log(resp);
+                setLoading(false);
+                alert("Details updated!");
+            })
+            .catch(() => {
+                setLoading(false);
+                alert("Server Error, Please try again!");
+            });
     };
 
     return (
-        <div>
-            <div>Education Details</div>
-            <div>
-                {educationalList.map((item, index) => (
-                    <div key={index}> {/* Add a key prop here */}
-                        <div>
-                            <label>University/School Name</label>
-                            <input
-                                name="universityName"
-                                onChange={(e) => handleChange(e, index)}
-                                value={item.universityName} // Use value instead of defaultValue
-                                defaultValue={item?.universityName}
-                            />
-                        </div>
-                        <div>
-                            <label>Degree</label>
-                            <input
-                                name="degree"
-                                onChange={(e) => handleChange(e, index)}
-                                value={item.degree} // Use value instead of defaultValue
-                                defaultValue={item?.degree}
-                            />
-                        </div>
-                        <div>
-                            <label>Major</label>
-                            <input
-                                name="major"
-                                onChange={(e) => handleChange(e, index)}
-                                value={item.major} // Use value instead of defaultValue
-                                defaultValue={item?.major}
-                            />
-                        </div>
-                        <div>
-                            <label>Start Date</label>
-                            <input
-                                name="startDate"
-                                type="date"
-                                onChange={(e) => handleChange(e, index)}
-                                value={item.startDate} // Use value instead of defaultValue
-                                defaultValue={item?.startDate}
-                            />
-                        </div>
-                        <div>
-                            <label>End Date</label>
-                            <input
-                                name="endDate"
-                                type="date"
-                                onChange={(e) => handleChange(e, index)}
-                                value={item.endDate} // Use value instead of defaultValue
-                                defaultValue={item?.endDate}
-                            />
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div>
-                <div>
-                    <button onClick={AddNewEducation}>Add Education</button>
-                    <button onClick={RemoveEducation}>Remove Education</button>
+        <div className="education-container">
+            <h2 className="education-title">Education Details</h2>
+            {educationalList.map((item, index) => (
+                <div key={index} className="education-box">
+                    <label>University/School Name</label>
+                    <input
+                        name="universityName"
+                        onChange={(e) => handleChange(e, index)}
+                        value={item.universityName}
+                    />
+
+                    <label>Degree</label>
+                    <input
+                        name="degree"
+                        onChange={(e) => handleChange(e, index)}
+                        value={item.degree}
+                    />
+
+                    <label>Major</label>
+                    <input
+                        name="major"
+                        onChange={(e) => handleChange(e, index)}
+                        value={item.major}
+                    />
+
+                    <label>Start Date</label>
+                    <input
+                        name="startDate"
+                        type="date"
+                        onChange={(e) => handleChange(e, index)}
+                        value={item.startDate}
+                    />
+
+                    <label>End Date</label>
+                    <input
+                        name="endDate"
+                        type="date"
+                        onChange={(e) => handleChange(e, index)}
+                        value={item.endDate}
+                    />
                 </div>
-                <button onClick={onSave} disabled={loading}>
-                    {loading ? "Saving..." : "Save"}
-                </button>
+            ))}
+            <div className="button-group">
+                <button onClick={AddNewEducation} className="education-btn">+ Add Education</button>
+                <button onClick={RemoveEducation} className="education-btn">- Remove Education</button>
             </div>
+            <button onClick={onSave} disabled={loading} className="save-btn">
+                {loading ? "Saving..." : "Save"}
+            </button>
         </div>
     );
 }

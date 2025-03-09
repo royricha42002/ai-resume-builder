@@ -11,7 +11,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <img src="/logo.svg" alt="Logo" width={50} height={50} />
-      
+
       {/* Show "Get Started" button only if the user is NOT signed in */}
       {!isSignedIn && (
         <Link to={"/auth/signin"}>
@@ -25,7 +25,9 @@ function Navbar() {
           <Link to={"/dashboard"}>
             <Button variant="outline">Dashboard</Button>
           </Link>
-          <UserButton />
+          <div className="user-container">
+            <UserButton />
+          </div>
         </div>
       )}
     </div>

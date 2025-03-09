@@ -1,29 +1,20 @@
 import React from 'react';
+import './SkillPreview.css'; // Ensure you have a CSS file for styling
 
 function SkillsPreview({ resumeInfo }) {
     return (
-        <div className='my-6'>
-            <h2 className='text-center font-bold text-sm mb-2' style={{ color: resumeInfo?.themeColor }}>
+        <div className="skills-preview">
+            <h2 className="section-title" style={{ color: resumeInfo?.themeColor }}>
                 Skills
             </h2>
-            <hr style={{ borderColor: resumeInfo?.themeColor }} />
+            {/* <hr className="section-divider" style={{ borderColor: resumeInfo?.themeColor }} /> */}
 
-            <div className='grid grid-cols-2 gap-3 my-4'>
+            <div className="skills-list">
                 {resumeInfo?.skills?.map((skill) => (
-                    <div key={skill.id || skill.name} className='flex items-center justify-between'>
-                        <h2 className='text-xs'>{skill.name}</h2>
-                        <div className='h-2 bg-gray-200 w-[120px]'>
-                            <div
-                                className='h-2'
-                                style={{
-                                    backgroundColor: resumeInfo?.themeColor,
-                                    width: skill?.rating + '%',
-                                }}
-                            ></div>
-                        </div>
-                    </div>
+                    <span key={skill.id || skill.name} className="skill-name">
+                        {skill.name}
+                    </span>
                 ))}
-
             </div>
         </div>
     );

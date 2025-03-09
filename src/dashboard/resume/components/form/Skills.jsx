@@ -1,16 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import './Skills.css';
-import { ResumeInfoContext } from '@/context/ResumeInfoContext';
-import GlobalApi from './../../../../../service/GlobalApi';
-import { useParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import { ResumeInfoContext } from "@/context/ResumeInfoContext";
+import { useParams } from "react-router-dom";
+import GlobalApi from "./../../../../../service/GlobalApi";
+import "./Skills.css";
 
 function Skills() {
     const [loading, setLoading] = useState(false);
     const { resumeId } = useParams();
     const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-
-    // Remove the rating field from the initial state
-    const [skillsList, setSkillsList] = useState([{ name: '' }]);
+    const [skillsList, setSkillsList] = useState([{ name: "" }]);
 
     const handleChange = (index, name, value) => {
         const newEntries = [...skillsList];
@@ -19,11 +17,13 @@ function Skills() {
     };
 
     const AddNewSkills = () => {
-        setSkillsList([...skillsList, { name: '' }]); // Only add the name field
+        setSkillsList([...skillsList, { name: "" }]);
     };
 
     const RemoveSkills = () => {
-        setSkillsList((skillsList) => skillsList.slice(0, -1));
+        if (skillsList.length > 1) {
+            setSkillsList(skillsList.slice(0, -1));
+        }
     };
 
     useEffect(() => {
@@ -35,11 +35,9 @@ function Skills() {
 
     const onSave = () => {
         setLoading(true);
-
-        // Send only the name field to the backend
         const data = {
             data: {
-                skills: skillsList.map((skill) => ({ name: skill.name })), // Only include the name field
+                skills: skillsList.map((skill) => ({ name: skill.name })),
             },
         };
 
@@ -47,42 +45,35 @@ function Skills() {
             .then((resp) => {
                 console.log(resp);
                 setLoading(false);
-                alert('Details updated!');
+                alert("Details updated!");
             })
             .catch((error) => {
                 setLoading(false);
-                console.error('Error updating resume:', error.response?.data || error.message);
-                alert('Server Error, Try again!');
+                console.error("Error updating resume:", error.response?.data || error.message);
+                alert("Server Error, Try again!");
             });
     };
 
     return (
-        <div>
-            <div>Skills</div>
-            <div className="skills-container">
-                {skillsList.map((item, index) => (
-                    <div className="skill-item" key={index}>
-                        <label>Name</label>
-                        <input
-                            defaultValue={item.name}
-                            onChange={(e) => handleChange(index, 'name', e.target.value)}
-                        />
-                    </div>
-                ))}
-            </div>
-            <div className="flex justify-between">
-                <div className="flex gap-2">
-                    <button variant="outline" onClick={AddNewSkills} className="text-primary">
-                        + Add More Skill
-                    </button>
-                    <button variant="outline" onClick={RemoveSkills} className="text-primary">
-                        - Remove
-                    </button>
+        <div className="skills-container">
+            <h2 className="skills-title">Skills</h2>
+            {skillsList.map((item, index) => (
+                <div className="skill-item" key={index}>
+                    <label>Skill Name</label>
+                    <input
+                        name="name"
+                        value={item.name}
+                        onChange={(e) => handleChange(index, "name", e.target.value)}
+                    />
                 </div>
-                <button disabled={loading} onClick={onSave}>
-                    Save
-                </button>
+            ))}
+            <div className="button-group">
+                <button onClick={AddNewSkills} className="skills-btn">+ Add More Skill</button>
+                <button onClick={RemoveSkills} className="skills-btn">- Remove</button>
             </div>
+            <button disabled={loading} onClick={onSave} className="save-btn">
+                {loading ? "Saving..." : "Save"}
+            </button>
         </div>
     );
 }

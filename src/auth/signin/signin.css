@@ -1,0 +1,9 @@
+/* Set only the background to dark without affecting Clerk styles */
+.signin-page {
+    background-color: #121212;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

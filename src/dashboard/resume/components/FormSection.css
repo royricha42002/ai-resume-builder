@@ -1,0 +1,27 @@
+/* styles.css */
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  button {
+    background-color: #BB86FC;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #9c67ff;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

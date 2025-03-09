@@ -3,6 +3,7 @@ import AddResume from "./components/AddResume";
 import GlobalApi from "./../../service/GlobalApi";
 import { useUser } from '@clerk/clerk-react';
 import ResumeCardItem from "./components/ResumeCardItem";
+import "./dashboard.css";  // Import CSS
 
 function Dashboard() {
   const { user } = useUser();
@@ -12,7 +13,7 @@ function Dashboard() {
     GlobalApi.GetUserResumes(user?.primaryEmailAddress?.emailAddress)
       .then(resp => {
         console.log(resp.data);
-        setResumeList(resp.data.data); // Ensure the correct data structure is used
+        setResumeList(resp.data.data); // Ensure correct structure
       });
   };
 
@@ -21,17 +22,22 @@ function Dashboard() {
   }, [user]);
 
   return (
-    <div>
-      <div>My Resume</div>
-      <div>Resumes reimagined, powered by AI</div>
-      <div className="resume-grid">
-        {/* AddResume component (plus sign) */}
-        <AddResume />
+    <div className="dashboard-container">
+      {/* Title and Subtitle */}
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">My Resume</h1>
+        <p className="dashboard-subtitle">Resumes reimagined, powered by AI</p>
+      </div>
 
-        {/* Display fetched resume items */}
-        {resumeList.length > 0 && resumeList.map((resume, index) => (
-          <ResumeCardItem resume={resume} key={index} />
-        ))}
+      {/* Plus Icon at the Top */}
+      <div className="add-resume-container">
+        <AddResume />
+      </div>
+
+      {/* Resume Cards Grid */}
+      <div className="resume-grid">
+        {resumeList.length > 0 &&
+          resumeList.map((resume, index) => <ResumeCardItem resume={resume} key={index} />)}
       </div>
     </div>
   );
