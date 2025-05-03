@@ -18,15 +18,15 @@ function ResumePreview() {
             {/* Summary */}
             <SummaryPreview resumeInfo={resumeInfo} />
             {/* Work experience */}
-            {/* <ExperiencePreview resumeInfo={resumeInfo} /> */}
-            {/* <hr/> */}
+            <ExperiencePreview resumeInfo={resumeInfo} />
+            <hr/>
             {/* education  */}
-            {/* <EducationPreview resumeInfo={resumeInfo} /> */}
+            <EducationPreview resumeInfo={resumeInfo} />
             {/* projects  */}
-            {/* <ProjectPreview resumeInfo={resumeInfo}/> */}
+            <ProjectPreview resumeInfo={resumeInfo}/>
             {/* skills  */}
-            {/* <hr/> */}
-            {/* <SkillPreview resumeInfo={resumeInfo}/> */}
+            <hr/>
+            <SkillPreview resumeInfo={resumeInfo}/>
         </div>
     );
 }
