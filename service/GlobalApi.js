@@ -1,109 +1,115 @@
 import axios from "axios";
 
-// Enhanced environment validation
-const API_KEY = import.meta.env.VITE_STRAPI_API_KEY?.trim();
-const API_URL = (import.meta.env.VITE_STRAPI_API_URL || import.meta.env.VITE_BASE_URL)?.replace(/\/+$/, "");
+// Environment variables
+const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
+const API_URL = import.meta.env.VITE_STRAPI_API_URL || import.meta.env.VITE_BASE_URL;
 
-if (!API_KEY) {
-  console.error("❌ VITE_STRAPI_API_KEY is missing or empty");
-  throw new Error("API key is required");
-}
-
-if (!API_URL) {
-  console.error("❌ API base URL is missing");
-  throw new Error("API base URL is required");
-}
-
-console.log("ℹ️ API Base URL:", API_URL);
-console.log("ℹ️ API Key Present:", !!API_KEY);
-
-// Configure axios instance
+// Create axios instance with CORS-friendly configuration
 const axiosClient = axios.create({
   baseURL: `${API_URL}/api`,
-  timeout: 15000,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${API_KEY}`,
     "Accept": "application/json"
+    // Removed 'X-Requested-With' as it was causing CORS issues
   },
-  withCredentials: false // Disable if not using cookies
+  withCredentials: true
 });
 
-// Enhanced request logging
+// Request interceptor
 axiosClient.interceptors.request.use(config => {
-  console.groupCollapsed(`⇨ ${config.method?.toUpperCase()} ${config.url}`);
-  console.log("Headers:", { 
-    Authorization: config.headers.Authorization ? "Present" : "Missing",
-    ...config.headers 
-  });
-  console.groupEnd();
+  console.debug(`[API] ${config.method?.toUpperCase()} to ${config.url}`);
   return config;
+}, error => {
+  console.error("[API] Request error:", error);
+  return Promise.reject(error);
 });
 
-// Enhanced error handling
+// Response interceptor
 axiosClient.interceptors.response.use(
-  response => {
-    console.log(`⇦ ${response.status} ${response.config.url}`);
-    return response;
-  },
+  response => response,
   error => {
-    const errorData = {
+    const errorInfo = {
       status: error.response?.status,
-      method: error.config?.method,
       url: error.config?.url,
-      error: error.response?.data?.error || error.message,
-      headers: {
-        sent: error.config?.headers,
-        received: error.response?.headers
-      }
+      method: error.config?.method,
+      error: error.response?.data,
+      headers: error.request?.headers
     };
-
-    console.group("❌ API Error");
-    console.error("Details:", errorData);
+    
+    console.error("[API] Error:", errorInfo);
     
     if (error.response?.status === 401) {
-      console.error("Authentication Failed. Possible causes:");
-      console.error("- Expired or invalid API token");
-      console.error("- Incorrect token permissions");
-      console.error("- Token not properly included in request");
-      
-      // Dispatch global auth error event
-      window.dispatchEvent(new CustomEvent("strapi-auth-error", {
-        detail: errorData
-      }));
+      console.error("[API] Authentication error - check your API token");
     }
-    console.groupEnd();
-
+    
+    if (error.code === "ERR_NETWORK") {
+      console.error("[API] Network error - check CORS configuration");
+    }
+    
     return Promise.reject(error);
   }
 );
 
-// API Methods with enhanced validation
 const api = {
-  async healthCheck() {
-    const response = await axiosClient.get("/_health");
-    return response.data;
-  },
-
   async CreateNewResume(data) {
     try {
-      console.log("Creating resume with data:", data);
       const response = await axiosClient.post("/user-resumes", { data });
       return response.data;
     } catch (error) {
-      console.error("Resume creation failed. Server responded with:", error.response?.data);
-      throw new Error("Failed to create resume. Please check your permissions.");
+      console.error("Create resume failed:", error);
+      throw error;
     }
   },
 
-  // Other methods remain the same pattern
-  // ...
-};
+  async GetUserResumes(userEmail) {
+    try {
+      const response = await axiosClient.get("/user-resumes", {
+        params: {
+          "filters[userEmail][$eq]": userEmail,
+          "populate": "*"
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Get resumes failed:", error);
+      throw error;
+    }
+  },
 
-// Verify initial connection
-api.healthCheck()
-  .then(() => console.log("✅ Successfully connected to Strapi API"))
-  .catch(err => console.error("❌ Initial connection failed:", err));
+  async UpdateResumeDetail(id, data) {
+    try {
+      const response = await axiosClient.put(`/user-resumes/${id}`, { data });
+      return response.data;
+    } catch (error) {
+      console.error("Update resume failed:", error);
+      throw error;
+    }
+  },
+
+  async GetResumeById(id) {
+    try {
+      const response = await axiosClient.get(`/user-resumes/${id}`, {
+        params: { "populate": "*" }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Get resume failed:", error);
+      throw error;
+    }
+  },
+
+  async DeleteResumeById(id) {
+    try {
+      const response = await axiosClient.delete(`/user-resumes/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Delete resume failed:", error);
+      throw error;
+    }
+  }
+};
 
 export default api;
 
