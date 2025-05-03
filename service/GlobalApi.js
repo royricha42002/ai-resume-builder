@@ -1,37 +1,84 @@
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
-
-// const axiosClient = axios.create({
-//     baseURL: 'http://localhost:1337/api/',
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${API_KEY}`
-//     }
-// })
+const API_URL = import.meta.env.VITE_STRAPI_API_URL || import.meta.env.VITE_BASE_URL;
 
 const axiosClient = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL+"/api/",
+    baseURL: `${API_URL}/api`,
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${API_KEY}`
     }
-})
+});
+
+// Add response interceptor to handle errors
+axiosClient.interceptors.response.use(
+    response => response,
+    error => {
+        console.error('API Error:', error.response?.data || error.message);
+        return Promise.reject(error);
+    }
+);
 
 const CreateNewResume = (data) => axiosClient.post('/user-resumes', data);
 
-const GetUserResumes = (userEmail) => axiosClient.get('/user-resumes?filters[userEmail][$eq]=' + userEmail);
+const GetUserResumes = (userEmail) => axiosClient.get('/user-resumes', {
+    params: {
+        'filters[userEmail][$eq]': userEmail,
+        'populate': '*'
+    }
+});
 
-const UpdateResumeDetail = (id, data) => axiosClient.put('/user-resumes/' + id, data)
+const UpdateResumeDetail = (id, data) => axiosClient.put(`/user-resumes/${id}`, data);
 
-const GetResumeById = (id) => axiosClient.get('/user-resumes/' + id + "?populate=*")
+const GetResumeById = (id) => axiosClient.get(`/user-resumes/${id}`, {
+    params: { 'populate': '*' }
+});
 
-const DeleteResumeById = (id) => axiosClient.delete('/user-resumes/' + id)
-4
+const DeleteResumeById = (id) => axiosClient.delete(`/user-resumes/${id}`);
+
 export default {
     CreateNewResume,
     GetUserResumes,
     UpdateResumeDetail,
     GetResumeById,
     DeleteResumeById
-}
+};
+
+// import axios from "axios";
+
+// const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
+
+// // const axiosClient = axios.create({
+// //     baseURL: 'http://localhost:1337/api/',
+// //     headers: {
+// //         'Content-Type': 'application/json',
+// //         'Authorization': `Bearer ${API_KEY}`
+// //     }
+// // })
+
+// const axiosClient = axios.create({
+//     baseURL: import.meta.env.VITE_BASE_URL+"/api/",
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${API_KEY}`
+//     }
+// })
+
+// const CreateNewResume = (data) => axiosClient.post('/user-resumes', data);
+
+// const GetUserResumes = (userEmail) => axiosClient.get('/user-resumes?filters[userEmail][$eq]=' + userEmail);
+
+// const UpdateResumeDetail = (id, data) => axiosClient.put('/user-resumes/' + id, data)
+
+// const GetResumeById = (id) => axiosClient.get('/user-resumes/' + id + "?populate=*")
+
+// const DeleteResumeById = (id) => axiosClient.delete('/user-resumes/' + id)
+// 4
+// export default {
+//     CreateNewResume,
+//     GetUserResumes,
+//     UpdateResumeDetail,
+//     GetResumeById,
+//     DeleteResumeById
+// }
