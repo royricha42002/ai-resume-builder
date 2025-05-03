@@ -35,11 +35,7 @@ function Skills() {
 
     const onSave = () => {
         setLoading(true);
-        const data = {
-            data: {
-                skills: skillsList.map((skill) => ({ name: skill.name })),
-            },
-        };
+        const data = skillsList.map((skill) => ({ name: skill.name }));
 
         GlobalApi.UpdateResumeDetail(resumeId, data)
             .then((resp) => {
