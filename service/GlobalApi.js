@@ -1,101 +1,185 @@
 import axios from "axios";
 
-// Environment variables with validation
+// Validate environment variables on startup
 const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
 const API_URL = import.meta.env.VITE_STRAPI_API_URL || import.meta.env.VITE_BASE_URL;
 
-if (!API_KEY) {
-  console.error('Missing VITE_STRAPI_API_KEY in environment variables');
-}
+if (!API_KEY) console.error("VITE_STRAPI_API_KEY is missing in environment variables");
+if (!API_URL) console.error("Both VITE_STRAPI_API_URL and VITE_BASE_URL are missing");
 
-if (!API_URL) {
-  console.error('Missing both VITE_STRAPI_API_URL and VITE_BASE_URL in environment variables');
-}
-
-// Create axios instance with default headers
+// Create axios instance with enhanced configuration
 const axiosClient = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: `${API_URL.replace(/\/+$/, "")}/api`, // Remove any trailing slashes
+  timeout: 15000,
   headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${API_KEY}`,
-    'Accept': 'application/json'
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${API_KEY}`,
+    "Accept": "application/json",
+    "X-Requested-With": "XMLHttpRequest"
   }
 });
 
-// Enhanced request interceptor
-axiosClient.interceptors.request.use(config => {
-  console.debug(`Making ${config.method?.toUpperCase()} request to ${config.url}`);
-  return config;
-}, error => {
-  console.error('Request Error:', error);
-  return Promise.reject(error);
-});
+// Request interceptor for logging and auth header verification
+axiosClient.interceptors.request.use(
+  (config) => {
+    console.debug(`[API] ${config.method?.toUpperCase()} ${config.url}`);
+    
+    if (!config.headers.Authorization) {
+      console.warn("No Authorization header present in request");
+      config.headers.Authorization = `Bearer ${API_KEY}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    console.error("[API] Request Error:", error);
+    return Promise.reject(error);
+  }
+);
 
 // Enhanced response interceptor
 axiosClient.interceptors.response.use(
-  response => {
-    console.debug('API Response:', {
-      status: response.status,
-      url: response.config.url,
-      data: response.data
-    });
+  (response) => {
+    console.debug(`[API] ${response.status} ${response.config.url}`);
     return response;
   },
-  error => {
+  (error) => {
     const errorDetails = {
       status: error.response?.status,
-      message: error.message,
       url: error.config?.url,
-      requestHeaders: error.config?.headers,
-      responseData: error.response?.data,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      method: error.config?.method,
+      headers: error.config?.headers,
+      errorData: error.response?.data,
+      timestamp: new Date().toISOString()
     };
 
-    console.error('API Error Details:', errorDetails);
-    
-    // Convert to a more user-friendly error format
-    const apiError = new Error(error.response?.data?.error?.message || error.message);
+    console.error("[API] Error Details:", errorDetails);
+
+    // Handle specific error cases
+    if (error.response?.status === 401) {
+      console.error("[API] Authentication failed - Verify your API token is valid and has proper permissions");
+      window.dispatchEvent(new CustomEvent("api-auth-error", { detail: errorDetails }));
+    }
+
+    // Create enriched error object
+    const apiError = new Error(error.response?.data?.error?.message || "API request failed");
     apiError.details = errorDetails;
+    apiError.status = error.response?.status;
     
     return Promise.reject(apiError);
   }
 );
 
-// API methods with enhanced options
+// API methods with enhanced error handling
 const api = {
-  CreateNewResume: (data) => axiosClient.post('/user-resumes', data),
-  
-  GetUserResumes: (userEmail) => axiosClient.get('/user-resumes', {
-    params: {
-      'filters[userEmail][$eq]': userEmail,
-      'populate': '*',
-      'sort': 'createdAt:desc' // Added default sorting
+  /**
+   * Create a new resume
+   * @param {Object} data - Resume data
+   * @returns {Promise} 
+   */
+  async CreateNewResume(data) {
+    try {
+      const response = await axiosClient.post("/user-resumes", { data });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to create resume:", error.details);
+      throw error;
     }
-  }),
+  },
 
-  UpdateResumeDetail: (id, data) => axiosClient.put(`/user-resumes/${id}`, {
-    data: data // Wrapped in data object for Strapi v4 compliance
-  }),
-
-  GetResumeById: (id) => axiosClient.get(`/user-resumes/${id}`, {
-    params: { 
-      'populate': '*',
-      'publicationState': 'live' // Ensure published content
+  /**
+   * Get resumes by user email
+   * @param {string} userEmail 
+   * @returns {Promise}
+   */
+  async GetUserResumes(userEmail) {
+    try {
+      const response = await axiosClient.get("/user-resumes", {
+        params: {
+          "filters[userEmail][$eq]": userEmail,
+          "populate": "*",
+          "publicationState": "live"
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch resumes:", error.details);
+      throw error;
     }
-  }),
+  },
 
-  DeleteResumeById: (id) => axiosClient.delete(`/user-resumes/${id}`, {
-    params: {
-      'confirmDeletion': true // Added for explicit confirmation
+  /**
+   * Update resume details
+   * @param {string} id - Resume ID
+   * @param {Object} data - Update data
+   * @returns {Promise}
+   */
+  async UpdateResumeDetail(id, data) {
+    try {
+      const response = await axiosClient.put(`/user-resumes/${id}`, { data });
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to update resume ${id}:`, error.details);
+      throw error;
     }
-  }),
+  },
 
-  // Health check endpoint
-  CheckAPIHealth: () => axiosClient.get('/_health')
+  /**
+   * Get resume by ID
+   * @param {string} id - Resume ID 
+   * @returns {Promise}
+   */
+  async GetResumeById(id) {
+    try {
+      const response = await axiosClient.get(`/user-resumes/${id}`, {
+        params: {
+          "populate": "*",
+          "publicationState": "live"
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to fetch resume ${id}:`, error.details);
+      throw error;
+    }
+  },
+
+  /**
+   * Delete resume by ID
+   * @param {string} id - Resume ID
+   * @returns {Promise} 
+   */
+  async DeleteResumeById(id) {
+    try {
+      const response = await axiosClient.delete(`/user-resumes/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to delete resume ${id}:`, error.details);
+      throw error;
+    }
+  },
+
+  /**
+   * Check API health status
+   * @returns {Promise}
+   */
+  async CheckAPIHealth() {
+    try {
+      const response = await axiosClient.get("/_health");
+      return response.data;
+    } catch (error) {
+      console.error("API health check failed:", error.details);
+      throw error;
+    }
+  }
 };
 
-// Debug log to verify initialization
-console.log('API Client initialized with baseURL:', axiosClient.defaults.baseURL);
+// Log initialization
+console.log("[API] Initialized with configuration:", {
+  baseURL: axiosClient.defaults.baseURL,
+  timeout: axiosClient.defaults.timeout,
+  headers: axiosClient.defaults.headers
+});
 
 export default api;
 
