@@ -1,20 +1,33 @@
+// import axios from "axios";
+
+// // Environment variables
+// const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
+// const API_URL = import.meta.env.VITE_STRAPI_API_URL || import.meta.env.VITE_BASE_URL;
+
+// // Create axios instance with CORS-friendly configuration
+// const axiosClient = axios.create({
+//   baseURL: `${API_URL}/api`,
+//   timeout: 10000,
+//   headers: {
+//     "Content-Type": "application/json",
+//     "Authorization": `Bearer ${API_KEY}`,
+//     "Accept": "application/json"
+//     // Removed 'X-Requested-With' as it was causing CORS issues
+//   },
+//   withCredentials: true
+// });
+
 import axios from "axios";
 
-// Environment variables
 const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
-const API_URL = import.meta.env.VITE_STRAPI_API_URL || import.meta.env.VITE_BASE_URL;
+const API_URL = import.meta.env.VITE_STRAPI_API_URL; // Directly use the Strapi URL
 
-// Create axios instance with CORS-friendly configuration
 const axiosClient = axios.create({
-  baseURL: `${API_URL}/api`,
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${API_KEY}`,
-    "Accept": "application/json"
-    // Removed 'X-Requested-With' as it was causing CORS issues
-  },
-  withCredentials: true
+    baseURL: `${API_URL}/api`, // Ensure baseURL uses the Strapi URL
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+    }
 });
 
 // Request interceptor
