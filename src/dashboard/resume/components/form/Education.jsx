@@ -53,11 +53,7 @@ function Education() {
 
     const onSave = () => {
         setLoading(true);
-        const data = {
-            data: {
-                education: educationalList.map(({ id, ...rest }) => rest),
-            },
-        };
+        const data = educationalList.map(({ id, ...rest }) => rest); // Send the array directly
 
         GlobalApi.UpdateResumeDetail(params.resumeId, data)
             .then((resp) => {
