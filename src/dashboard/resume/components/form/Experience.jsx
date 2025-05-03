@@ -79,11 +79,7 @@ function Experience() {
 
     const onSave = () => {
         setLoading(true);
-        const data = {
-            data: {
-                experience: experienceList.map(({ id, ...rest }) => rest), // Ensure workSummary is included
-            },
-        };
+        const data = experienceList.map(({ id, ...rest }) => rest);
 
         GlobalApi.UpdateResumeDetail(params?.resumeId, data)
             .then((res) => {
