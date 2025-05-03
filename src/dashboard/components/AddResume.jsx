@@ -26,18 +26,34 @@ function AddResume() {
       userName: user?.fullName,
     };
 
-    GlobalApi.CreateNewResume(data).then( // Send data directly
-      (resp) => {
-        console.log(resp.data.data.documentId);
-        if (resp) {
-          setLoading(false);
-          navigation('/dashboard/resume/' + resp.data.data.documentId + '/edit');
-        }
-      },
-      (error) => {
-        setLoading(false);
-      }
-    );
+    // GlobalApi.CreateNewResume(data).then( // Send data directly
+    //   (resp) => {
+    //     console.log(resp.data.data.documentId);
+    //     if (resp) {
+    //       setLoading(false);
+    //       navigation('/dashboard/resume/' + resp.data.data.documentId + '/edit');
+    //     }
+    //   },
+    //   (error) => {
+    //     setLoading(false);
+    //   }
+    // );
+    GlobalApi.CreateNewResume(data).then(
+  (resp) => {
+    console.log(resp.data.documentId); // Access documentId directly from resp.data
+    if (resp?.data?.documentId) { // Add a safety check
+      setLoading(false);
+      navigation('/dashboard/resume/' + resp.data.documentId + '/edit');
+    } else {
+      console.error("documentId not found in the response:", resp);
+      setLoading(false);
+      // Optionally navigate to a default dashboard or show an error message
+    }
+  },
+  (error) => {
+    setLoading(false);
+  }
+);
   };
 
   const handleInputChange = (e) => {
