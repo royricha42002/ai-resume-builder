@@ -35,14 +35,14 @@ function FormSection() {
         <PersonalDetails enabledNext={(v) => setEnableNext(v)} />
       ) : activeFormIndex === 2 ? (
         <Summary enabledNext={(v) => setEnableNext(v)} />
-      // ) : activeFormIndex === 3 ? (
-      //   <Experience enabledNext={(v) => setEnableNext(v)} />
-      // ) : activeFormIndex === 4 ? (
-      //   <Education enabledNext={(v) => setEnableNext(v)} />
-      // ) : activeFormIndex === 5 ? (
-      //   <Skills enabledNext={(v) => setEnableNext(v)} />
-      // ) : activeFormIndex === 6 ? (
-      //   <Navigate to={`/my-resume/${resumeId}/view`} />
+      ) : activeFormIndex === 3 ? (
+        <Experience enabledNext={(v) => setEnableNext(v)} />
+      ) : activeFormIndex === 4 ? (
+        <Education enabledNext={(v) => setEnableNext(v)} />
+      ) : activeFormIndex === 5 ? (
+        <Skills enabledNext={(v) => setEnableNext(v)} />
+      ) : activeFormIndex === 6 ? (
+        <Navigate to={`/my-resume/${resumeId}/view`} />
       ) : null}
     </div>
   );
