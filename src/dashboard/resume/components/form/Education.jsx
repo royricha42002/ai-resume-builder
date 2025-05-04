@@ -52,20 +52,23 @@ function Education() {
     };
 
     const onSave = () => {
-        setLoading(true);
-        const data = educationalList.map(({ id, ...rest }) => rest); // Send the array directly
-
-        GlobalApi.UpdateResumeDetail(params.resumeId, data)
-            .then((resp) => {
-                console.log(resp);
-                setLoading(false);
-                alert("Details updated!");
-            })
-            .catch(() => {
-                setLoading(false);
-                alert("Server Error, Please try again!");
-            });
+    setLoading(true);
+    const data = {
+        education: educationalList.map(({ id, ...rest }) => rest), // Wrap the array under the 'education' key
     };
+
+    GlobalApi.UpdateResumeDetail(params.resumeId, data)
+        .then((resp) => {
+            console.log(resp);
+            setLoading(false);
+            alert("Details updated!");
+        })
+        .catch((error) => { // It's good practice to catch the error object
+            console.error("Error updating education details:", error);
+            setLoading(false);
+            alert("Server Error, Please try again!");
+        });
+};
 
     return (
         <div className="education-container">
