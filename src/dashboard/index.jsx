@@ -16,8 +16,8 @@ function Dashboard() {
         GlobalApi.GetUserResumes(user?.primaryEmailAddress?.emailAddress)
             .then(resp => {
                 console.log("GetResumes Response:", resp);
-                if (resp?.data?.data) {
-                    setResumeList(resp.data.data);
+                if (resp?.data) {
+                    setResumeList(resp.data);
                     setError(null); // Clear any previous error
                 } else {
                     setResumeList([]); // Handle cases where data might be empty or undefined
