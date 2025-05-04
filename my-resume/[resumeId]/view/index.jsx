@@ -10,12 +10,15 @@ function ViewResume() {
     const [resumeInfo, setResumeInfo] = useState();
     const { resumeId } = useParams();
 
+    console.log("Resume ID from useParams:", resumeId); // Add this line
+    
     useEffect(() => {
         GetResumeInfo();
     }, []);
 
     const GetResumeInfo = () => {
         GlobalApi.GetResumeById(resumeId).then(resp => {
+            console.log("Full API Response:", resp); // Log the entire response
             console.log("Data fetched from Strapi:", resp.data.data); // Check the raw data from Strapi
             setResumeInfo(resp.data.data);
         });
