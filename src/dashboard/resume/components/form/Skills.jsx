@@ -34,21 +34,23 @@ function Skills() {
     }, [skillsList]);
 
     const onSave = () => {
-        setLoading(true);
-        const data = skillsList.map((skill) => ({ name: skill.name }));
-
-        GlobalApi.UpdateResumeDetail(resumeId, data)
-            .then((resp) => {
-                console.log(resp);
-                setLoading(false);
-                alert("Details updated!");
-            })
-            .catch((error) => {
-                setLoading(false);
-                console.error("Error updating resume:", error.response?.data || error.message);
-                alert("Server Error, Try again!");
-            });
+    setLoading(true);
+    const data = {
+        skills: skillsList.map((skill) => ({ name: skill.name })), // Wrap the array under the 'skills' key
     };
+
+    GlobalApi.UpdateResumeDetail(resumeId, data)
+        .then((resp) => {
+            console.log(resp);
+            setLoading(false);
+            alert("Details updated!");
+        })
+        .catch((error) => {
+            setLoading(false);
+            console.error("Error updating resume:", error.response?.data || error.message);
+            alert("Server Error, Try again!");
+        });
+};
 
     return (
         <div className="skills-container">
