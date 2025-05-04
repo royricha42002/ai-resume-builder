@@ -11,18 +11,31 @@ function ViewResume() {
     const { resumeId } = useParams();
 
     console.log("Resume ID from useParams:", resumeId); // Add this line
+    console.log("ResumeInfo in ViewResume (initial or previous):", resumeInfo); // Keep this
     
     useEffect(() => {
         GetResumeInfo();
     }, []);
 
+    // const GetResumeInfo = () => {
+    //     GlobalApi.GetResumeById(resumeId).then(resp => {
+    //         console.log("Full API Response:", resp); // Log the entire response
+    //         console.log("Data fetched from Strapi:", resp.data); // Check the raw data from Strapi
+    //         setResumeInfo(resp.data);
+    //     });
+    // };
+
     const GetResumeInfo = () => {
-        GlobalApi.GetResumeById(resumeId).then(resp => {
-            console.log("Full API Response:", resp); // Log the entire response
-            console.log("Data fetched from Strapi:", resp.data); // Check the raw data from Strapi
+    GlobalApi.GetResumeById(resumeId).then(resp => {
+        console.log("Full API Response:", resp);
+        if (resp && resp.data) {
+            console.log("Data found in resp.data:", resp.data);
             setResumeInfo(resp.data);
-        });
-    };
+        } else {
+            console.log("resp.data is undefined or null:", resp);
+        }
+    });
+};
 
     const HandleDownload = () => {
         setTimeout(() => {
